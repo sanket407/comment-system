@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-md-12" ng-controller="CommentController as ctrl">
+    <div class="form-group" ng-show="!UserService.currentUser.isGuest">
+      <label for="comment">Comment:</label>
+      <textarea class="form-control" rows="3" id="comment" ng-model="ctrl.newComment"></textarea>
+      <div class="text-center">
+        <button id="btnSearch" class="btn btn-primary btn-md center-block" style="width: 100px;"
+         ng-disabled="!ctrl.newComment || !ctrl.newComment.length || ctrl.isCurrentUserGuest"
+          ng-click="ctrl.addComment()">Add</button>
+      </div>
+    </div>
+
+<comment-renderer list="CommentService.list"></comment-renderer>
+
+
+</div>
+</div>

@@ -1,0 +1,61 @@
+
+
+
+  <script type="text/ng-template" id="categoryTree">
+    <div class="container">
+    <div class="col-md-8 well well-sm">
+    <!-- <a class="list-group-item list-group-item-info"> -->
+
+      <div class="col-md-3">
+        <span>{{comment.content}}</span>
+      </div>
+      <div class="col-md-3">
+        <span> {{comment.time}}</span>
+      </div>
+      <div class="col-md-3">
+        <span> {{comment.username}}</span>
+      </div>
+      <div class="col-md-3">
+        <span class="pull-right">
+
+        <button class="btn btn-xs btn-warning" ng-init="reset(comment)" ng-show="comment.replies.length && !comment.isExpanded"
+         ng-click="toggleExpansion(comment)" data-placement="top" title="Show Replies" onmouseenter="$(this).tooltip('show')">
+         <i class="far fa-plus-square"></i></button>
+
+        <button class="btn btn-xs btn-warning" ng-show="comment.replies.length && comment.isExpanded"
+        ng-click="toggleExpansion(comment)" data-placement="top" title="Hide Replies" onmouseenter="$(this).tooltip('show')">
+        <i class="far fa-minus-square"></i></button>
+
+        <button class="btn btn-xs btn-success" ng-show="!comment.isReplying && !UserService.currentUser.isGuest"
+        ng-click="showReplyArea(comment)" data-placement="top" title="Reply" onmouseenter="$(this).tooltip('show')">
+        <i class="fas fa-reply"></i></button>
+
+        <button class="btn btn-xs btn-danger" ng-show="comment.username == UserService.currentUser.username"
+        ng-click="deleteComment(comment)" data-placement="top" title="Delete" onmouseenter="$(this).tooltip('show')">
+        <i class="far fa-trash-alt"></i></button>
+        </span>
+      </div>
+    <!-- </a> -->
+  </div>
+
+    <div class="col-md-8" id="reply-area" ng-if="comment.isReplying">
+      <div class="form-group">
+        <label for="comment">Comment:</label>
+        <textarea class="form-control" rows="3" id="comment" ng-model="newComment"></textarea>
+      </div>
+      <div class="text-center">
+        <div class="btn-group">
+          <button id="btnAdd" class="btn btn-primary btn-md center-block" style="width: 100px;" ng-disabled="!newComment.length" ng-click="addNewReplyComment(comment, newComment)">Add</button>
+          <button id="btnClear" class="btn btn-danger btn-md center-block" style="width: 100px;" ng-click="hideReplyArea(comment)">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <div id="expanded-child-comments" ng-if="comment.isExpanded">
+      <ul><div ng-repeat="comment in comment.replies" ng-include = "'categoryTree'" ></div></ul>
+    </div>
+</div>
+</script>
+
+<div ng-repeat="comment in list" ng-include="'categoryTree'">
+
+</div>
